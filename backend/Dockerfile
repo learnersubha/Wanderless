@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . .
 
 # packages install
-RUN npm install -g npm@latest
+RUN npm install 
 
 
 
@@ -21,7 +21,7 @@ WORKDIR /app
 # copy the above stage as compressed
 COPY --from=backend-builder /app .
 
-COPY .env.docker .env.local
+
 
 # Port
 EXPOSE 8080
