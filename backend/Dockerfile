@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . .
 
 # packages install
-RUN npm install
+RUN npm install -g npm@latest
 
 
 
