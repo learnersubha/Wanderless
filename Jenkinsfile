@@ -36,7 +36,7 @@ pipeline {
         }
         stage ("code deploy") {
             steps {
-                sh "docker-compose up -d --build frontend"
+                sh "docker-compose up -d"
             }
         }
     }
