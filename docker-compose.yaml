@@ -36,8 +36,6 @@ services:
       - mongodb 
      
     
-volumes:
-  data:
 
 
 
