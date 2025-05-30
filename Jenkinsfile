@@ -13,7 +13,7 @@ pipeline {
         }
         stage ("backend image build") {
             steps {
-                sh "docker build -t $BACKEND_IMAGE:$IMAGE_TAG -f backend/Dockerfile ."
+                sh "docker buil -t $BACKEND_IMAGE:$IMAGE_TAG -f backend/Dockerfile ."
             }
         }
         stage ("frontend image build") {
@@ -47,6 +47,14 @@ pipeline {
                 to: 'subha.devops4084@gmail.com',
                 subject: 'Build Successful',
                 body: 'Your build was successful.'
+            )
+        }
+        faliure {
+            emailext (
+                from: 'subha.devops4084@gmail.com',
+                to: 'subha.devops4084@gmail.com',
+                subject: 'Build Faliure',
+                body: 'Your build was Faliure.'
             )
         }
     }
