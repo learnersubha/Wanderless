@@ -1,6 +1,5 @@
-@Library("vars") _
 pipeline {
-    agent any
+    agent {label  "prod"}
     environment {
         BACKEND_IMAGE = "learnersubha/w-backend"
         FRONTEND_IMAGE = "learnersubha/w-frontend"
@@ -10,38 +9,32 @@ pipeline {
     stages {
         stage ("code clone") {
             steps {
-                script {
-                   clone ("https://github.com/learnersubha/Wanderless.git", "dev")
-                }
-            }    
+                git url: "https://github.com/learnersubha/Wanderless.git", branch: "dev"
+            }
         }
          stage("sonarQube: code analysis"){
-             steps {
-                script {
-                   sonar("sonar","wanderlust","wanderlust")
+            steps {
+                 withSonarQubeEnv("Sonar") {
+                     sh "$SONAR_HOME/bin/sonar-scanner -Dsonar.projectName=Wanderlust -Dsonar.projectKey=Wanderlust -X"
                  }
-             }
+            }
+           
         }
         stage("OWASP dependency check") {
             steps {
-                script {
-                   owasp()
-                }
-            }   
+                 dependencyCheck additionalArguments: '--scan ./', odcInstallation: 'OWASP'
+                 dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+            }
         }
         stage ("backend image build") {
             steps {
-                script {
-                   backend-image(backend/Dockerfile)
-                }
-            }    
+                sh "docker build -t $BACKEND_IMAGE:$IMAGE_TAG -f backend/Dockerfile ."
+            }
         }
         stage ("frontend image build") {
             steps {
-                script {
-                    frontend-image (frontend/Dockerfile)
-                }
-            }    
+                sh "docker build -t $FRONTEND_IMAGE:$IMAGE_TAG -f frontend/Dockerfile ."
+            }
         }
         stage ("image push") {
             steps {
@@ -81,5 +74,3 @@ pipeline {
         }
     }
 }
-
-
