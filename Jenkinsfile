@@ -11,6 +11,12 @@ pipeline {
                 git url: "https://github.com/learnersubha/Wanderless.git", branch: "dev"
             }
         }
+        stage("OWASP dependency check") {
+            steps {
+                 dependencyCheck additionalArguments: '--scan ./', odcInstallation: 'OWASP'
+                 dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+            }
+        }
         stage ("backend image build") {
             steps {
                 sh "docker build -t $BACKEND_IMAGE:$IMAGE_TAG -f backend/Dockerfile ."
