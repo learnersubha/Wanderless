@@ -1,5 +1,5 @@
 pipeline {
-    agent {label "prod"};
+    agent any
     environment {
         BACKEND_IMAGE = "learnersubha/w-backend"
         FRONTEND_IMAGE = "learnersubha/w-frontend"
