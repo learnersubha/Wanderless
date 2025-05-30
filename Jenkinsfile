@@ -41,3 +41,14 @@ pipeline {
         }
     }
 }
+
+post {
+    success {
+        script {
+            emailtxt from: 'learnersubha0@gmail.com',
+            to: 'learnersubha0@gmail.com',
+            body: 'your build was successful',
+            subject: 'build successful'
+        }
+    }
+}    
