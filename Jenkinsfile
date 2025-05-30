@@ -1,4 +1,4 @@
-@Library("vars") _
+@Library("vars")_
 pipeline {
     agent any
     environment {
