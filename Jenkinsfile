@@ -40,15 +40,16 @@ pipeline {
             }
         }
     }
-}
-
-post {
-    success {
-        script {
-            emailtxt from: 'learnersubha0@gmail.com',
-            to: 'learnersubha0@gmail.com',
-            body: 'your build was successful',
-            subject: 'build successful'
+    post {
+        success {
+            emailext (
+                from: 'subha.devops4084@gmail.com',
+                to: 'subha.devops4084@gmail.com',
+                subject: 'Build Successful',
+                body: 'Your build was successful.'
+            )
         }
     }
-}    
+}
+
+
