@@ -13,7 +13,7 @@ pipeline {
         }
         stage ("backend image build") {
             steps {
-                sh "docker buil -t $BACKEND_IMAGE:$IMAGE_TAG -f backend/Dockerfile ."
+                sh "docker build -t $BACKEND_IMAGE:$IMAGE_TAG -f backend/Dockerfile ."
             }
         }
         stage ("frontend image build") {
