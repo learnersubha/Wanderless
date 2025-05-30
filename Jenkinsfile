@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage ("code clone") {
             steps {
-                git url: "https://github.com/learnersubha/Wanderless.git", branch: "dev"
+                clone ("https://github.com/learnersubha/Wanderless.git", "dev")
             }
         }
          stage("sonarQube: code analysis"){
