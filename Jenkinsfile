@@ -8,40 +8,30 @@ pipeline {
     }
     stages {
         stage ("code clone") {
-            steps {
                 script {
                    clone ("https://github.com/learnersubha/Wanderless.git", "dev")
                 }
-            }
         }
          stage("sonarQube: code analysis"){
-            steps {
                 script {
                    sonar()
                  }
-            }
            
         }
         stage("OWASP dependency check") {
-            steps {
                 script {
                    owasp()
                 }
-            }
         }
         stage ("backend image build") {
-            steps {
                 script {
                    backend-image(backend/Dockerfile)
                 }
-            }
         }
         stage ("frontend image build") {
-            steps {
                 script {
                     frontend-image (frontend/Dockerfile)
                 }
-            }
         }
         stage ("image push") {
             steps {
