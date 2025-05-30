@@ -49,12 +49,12 @@ pipeline {
                 body: 'Your build was successful.'
             )
         }
-        faliure {
+        failure {
             emailext (
                 from: 'subha.devops4084@gmail.com',
                 to: 'subha.devops4084@gmail.com',
-                subject: 'Build Faliure',
-                body: 'Your build was Faliure.'
+                subject: 'Build Failure',
+                body: 'Your build was Failure.'
             )
         }
     }
