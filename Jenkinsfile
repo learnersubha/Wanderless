@@ -4,12 +4,21 @@ pipeline {
         BACKEND_IMAGE = "learnersubha/w-backend"
         FRONTEND_IMAGE = "learnersubha/w-frontend"
         IMAGE_TAG = "${BUILD_NUMBER}"
+        SONAR_HOME = tool "Sonar"
     }
     stages {
         stage ("code clone") {
             steps {
                 git url: "https://github.com/learnersubha/Wanderless.git", branch: "dev"
             }
+        }
+         stage("sonarQube: code analysis"){
+            steps {
+                 withSonarQubeEnv("Sonar") {
+                     sh "$SONAR_HOME/bin/sonar-scanner -Dsonar.projectName=easyapp -Dsonar.projectKey=easyapp -X"
+                 }
+            }
+           
         }
         stage("OWASP dependency check") {
             steps {
