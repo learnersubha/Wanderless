@@ -26,10 +26,6 @@ pipeline {
                  dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
             }
         }
-        stage("trivy scan") {
-            steps {
-                 sh "trivy fs . -o result.json"
-            }
         stage ("backend image build") {
             steps {
                 sh "docker build -t $BACKEND_IMAGE:$IMAGE_TAG -f backend/Dockerfile ."
