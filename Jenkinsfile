@@ -9,31 +9,38 @@ pipeline {
     stages {
         stage ("code clone") {
             steps {
-                clone ("https://github.com/learnersubha/Wanderless.git", "dev")
+                script {
+                   clone ("https://github.com/learnersubha/Wanderless.git", "dev")
+                }
             }
         }
          stage("sonarQube: code analysis"){
             steps {
-                 withSonarQubeEnv("Sonar") {
-                     sh "$SONAR_HOME/bin/sonar-scanner -Dsonar.projectName=easyapp -Dsonar.projectKey=easyapp -X"
+                script {
+                   sonar()
                  }
             }
            
         }
         stage("OWASP dependency check") {
             steps {
-                 dependencyCheck additionalArguments: '--scan ./', odcInstallation: 'OWASP'
-                 dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+                script {
+                   owasp()
+                }
             }
         }
         stage ("backend image build") {
             steps {
-                sh "docker build -t $BACKEND_IMAGE:$IMAGE_TAG -f backend/Dockerfile ."
+                script {
+                   backend-image(backend/Dockerfile)
+                }
             }
         }
         stage ("frontend image build") {
             steps {
-                sh "docker build -t $FRONTEND_IMAGE:$IMAGE_TAG -f frontend/Dockerfile ."
+                script {
+                    frontend-image (frontend/Dockerfile)
+                }
             }
         }
         stage ("image push") {
