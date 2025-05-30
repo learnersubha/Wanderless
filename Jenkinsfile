@@ -15,7 +15,7 @@ pipeline {
          stage("sonarQube: code analysis"){
             steps {
                  withSonarQubeEnv("Sonar") {
-                     sh "$SONAR_HOME/bin/sonar-scanner -Dsonar.projectName=easyapp -Dsonar.projectKey=easyapp -X"
+                     sh "$SONAR_HOME/bin/sonar-scanner -Dsonar.projectName=Wanderlust -Dsonar.projectKey=Wanderlust -X"
                  }
             }
            
