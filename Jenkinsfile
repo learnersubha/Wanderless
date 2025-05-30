@@ -18,7 +18,7 @@ pipeline {
          stage("sonarQube: code analysis"){
              steps {
                 script {
-                   sonar()
+                   sonar("sonar","wanderlust","wanderlust")
                  }
              }
         }
